@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditional Iframe Example</title>
+    <style>
+        /* Styling the error message */
+        #iframe-container .error-message {
+            width: 800px;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>Loading Iframe Conditionally</h1>
+
+    <div id="iframe-container">
+        <!-- Iframe or error message will be inserted here -->
+    </div>
+
+    <script>
+        // URL to check if framing is allowed
+        const checkUrl = 'https://api.x.com/1.1/live_pipeline/';
+
+        // Function to load the iframe
+        function loadIframe() {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'https://api.x.com/1.1/live_pipeline/';
+            iframe.width = '800';
+            iframe.height = '600';
+            iframe.frameBorder = '0';
+            iframe.allowFullscreen = true;
+            document.getElementById('iframe-container').appendChild(iframe);
+        }
+
+        // Function to show an error message in the iframe container with the server's reason
+        function showError(reason) {
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'error-message';
+            errorMessage.textContent = `Error: ${reason || 'This content cannot be displayed in an iframe.'}`;
+            document.getElementById('iframe-container').appendChild(errorMessage);
+        }
+
+        // Send a request to the server to check if framing is allowed
+        fetch(checkUrl)
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Assume the server responds with JSON
+                }
+                throw new Error('Server response was not OK.');
+            })
+            .then(data => {
+                if (data.allowFraming) {
+                    loadIframe(); // Load the iframe if the server allows it
+                } else {
+                    showError(data.reason); // Show error message with the server's reason
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showError('There was an error communicating with the server.'); // Fallback error message
+            });
+    </script>
+</body>
+</html>
