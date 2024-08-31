@@ -1,68 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Iframe Interaction Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divided Page with Iframe</title>
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+        body {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
+            height: 100vh;
+            margin: 0;
         }
-        .iframe-container {
-            position: relative;
-            width: 90%;
-            height: 90vh;
-            border: 2px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+        .left-side, .right-side {
+            width: 50%;
+            height: 100%;
         }
+
+        .left-side {
+            background-color: #f0f0f0; /* Light grey background */
+        }
+
+        .right-side {
+            background-color: #fff; /* White background */
+        }
+
         iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
-        #triggerAlert {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
-
-<div class="iframe-container">
-    <iframe src="https://www.arkoselabs.com/admin" title="Example Iframe" id="myIframe"></iframe>
-</div>
-
-<button id="triggerAlert">Trigger Alert</button>
-
-<script>
-    document.getElementById('triggerAlert').addEventListener('click', function() {
-        var iframe = document.getElementById('myIframe');
-
-        // Check if the iframe is loaded
-        iframe.onload = function() {
-            try {
-                // Attempt to access iframe content
-                var iframeWindow = iframe.contentWindow;
-                iframeWindow.postMessage('Hello from parent', '*');  // Sending a message to iframe
-            } catch (e) {
-                console.error('Unable to interact with iframe content:', e);
-            }
-        };
-    });
-
-    // Listen for messages from the iframe
-    window.addEventListener('message', function(event) {
-        // You may want to verify the origin of the message here
-        console.log('Message from iframe:', event.data);
-    });
-</script>
-
+    <div class="left-side">
+        <iframe src="https://arkoselabsmarketing.cloudflareaccess.com/cdn-cgi/access/callback/"></iframe>
+    </div>
+    <div class="right-side">
+        <iframe src="https://arkoselabsmarketing.cloudflareaccess.com"></iframe>
+    </div>
 </body>
 </html>
