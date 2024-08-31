@@ -1,77 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conditional Iframe Example</title>
+    <title>Iframe Interaction Example</title>
     <style>
-        /* Styling the error message */
-        #iframe-container .error-message {
-            width: 800px;
-            height: 600px;
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
-            align-items: center;
             justify-content: center;
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            border-radius: 4px;
+            align-items: center;
             font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
+        }
+        .iframe-container {
+            position: relative;
+            width: 90%;
+            height: 90vh;
+            border: 2px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        #triggerAlert {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h1>Loading Iframe Conditionally</h1>
 
-    <div id="iframe-container">
-        <!-- Iframe or error message will be inserted here -->
-    </div>
+<div class="iframe-container">
+    <iframe src="https://arkoselabsmarketing.cloudflareaccess.com/..//github.com/nigam498/xsscrapy" title="Example Iframe" id="myIframe"></iframe>
+</div>
 
-    <script>
-        // URL to check if framing is allowed
-        const checkUrl = 'https://client-api.arkoselabs.com/v2/';
+<button id="triggerAlert">Trigger Alert</button>
 
-        // Function to load the iframe
-        function loadIframe() {
-            const iframe = document.createElement('iframe');
-            iframe.src = 'https://client-api.arkoselabs.com/v2/';
-            iframe.width = '800';
-            iframe.height = '600';
-            iframe.frameBorder = '0';
-            iframe.allowFullscreen = true;
-            document.getElementById('iframe-container').appendChild(iframe);
-        }
+<script>
+    document.getElementById('triggerAlert').addEventListener('click', function() {
+        var iframe = document.getElementById('myIframe');
 
-        // Function to show an error message in the iframe container with the server's reason
-        function showError(reason) {
-            const errorMessage = document.createElement('div');
-            errorMessage.className = 'error-message';
-            errorMessage.textContent = `Error: ${reason || 'This content cannot be displayed in an iframe.'}`;
-            document.getElementById('iframe-container').appendChild(errorMessage);
-        }
+        // Check if the iframe is loaded
+        iframe.onload = function() {
+            try {
+                // Attempt to access iframe content
+                var iframeWindow = iframe.contentWindow;
+                iframeWindow.postMessage('Hello from parent', '*');  // Sending a message to iframe
+            } catch (e) {
+                console.error('Unable to interact with iframe content:', e);
+            }
+        };
+    });
 
-        // Send a request to the server to check if framing is allowed
-        fetch(checkUrl)
-            .then(response => {
-                if (response.ok) {
-                    return response.json(); // Assume the server responds with JSON
-                }
-                throw new Error('Server response was not OK.');
-            })
-            .then(data => {
-                if (data.allowFraming) {
-                    loadIframe(); // Load the iframe if the server allows it
-                } else {
-                    showError(data.reason); // Show error message with the server's reason
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showError('There was an error communicating with the server.'); // Fallback error message
-            });
-    </script>
+    // Listen for messages from the iframe
+    window.addEventListener('message', function(event) {
+        // You may want to verify the origin of the message here
+        console.log('Message from iframe:', event.data);
+    });
+</script>
+
 </body>
 </html>
