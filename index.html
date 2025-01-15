@@ -1,16 +1,43 @@
-<html>
-  <body>
-    <form action="x" method="POST">
-      <input type="hidden" name="username" value="ss" />
-      <input type="hidden" name="password" value="" />
-      <input type="hidden" name="cpassword" value="" />
-      <input type="hidden" name="email" value="ss" />
-      <input type="hidden" name="save" value="Save" />
-      <input type="submit" value="Submit request" />
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button to Add Data</title>
     <script>
-      history.pushState('', '', '/');
-      document.forms[0].submit();
+        // Initialize window.google.ac.h with an empty array if not already defined
+        if (!window.google) {
+            window.google = {};
+        }
+        if (!window.google.ac) {
+            window.google.ac = {};
+        }
+        if (!window.google.ac.h) {
+            window.google.ac.h = [];
+        }
+
+        // Function to add data when the button is clicked
+        function addData() {
+            const newData = [
+                [["vinod chandran supreme court", 0, [3, 362, 143], {"zf": 33, "zl": 8}]],
+                [["mannat episode 6 full episode", 0, [3, 362, 143], {"zf": 33, "zl": 8}]],
+                [["mom son", 0, [3, 362, 143], {"zf": 33, "zl": 8}]],
+                [["itc hotels share allotment date", 0, [3, 362, 143], {"zf": 33, "zl": 8}]]
+            ];
+
+            // Add the new data to window.google.ac.h
+            window.google.ac.h.push(...newData);
+
+            // Log the updated array to the console
+            console.log(window.google.ac.h);
+        }
     </script>
-  </body>
+</head>
+<body>
+
+    <h1>Click the button to add data to window.google.ac.h</h1>
+    
+    <button onclick="addData()">Click Me</button>
+
+</body>
 </html>
