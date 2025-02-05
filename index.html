@@ -3,14 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Click Here to Win iPhone</title>
+    <title>shuuuuuuuuuuuu!!!!!!!!!!!!!!!!!!!!!!!!</title>
 </head>
 <body>
-    <h1>Click the Button Below for a Chance to Win an iPhone</h1>
-    <a href="#" onclick="window.location.href='https://www.linkedin.com/suggested-for-you/based-on-your-sent-invite/?originContext=EMAIL&vanityName=suzanne-dominick-2b087b5'; return false;">
-        <button style="padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Win iPhone
-        </button>
-    </a>
+   <script id="IntercomSettingsScriptTag">
+  window.intercomSettings = {
+    app_id: "your_app_id",
+    name: "John Doe",
+    email: "john.doe@example.com",
+    user_id: "12345",
+    created_at: 1625243432
+  };
+</script>
+<script>
+  (function(){ 
+    var w=window;
+    var ic=w.Intercom;
+    if(typeof ic==="function"){
+      ic('reattach_activator');
+      ic('update', w.intercomSettings);
+    } else {
+      var d=document;
+      var i=function(){ i.c(arguments); };
+      i.q=[];
+      i.c=function(args){ i.q.push(args); };
+      w.Intercom=i;
+      var l=function(){ 
+        var s=d.createElement('script'); 
+        s.type='text/javascript'; 
+        s.async=true;
+        s.src='https://widget.intercom.io/widget/your_app_id';
+        var x=d.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(s, x);
+      };
+      if(document.readyState==='complete'){
+        l();
+      } else if(w.attachEvent){
+        w.attachEvent('onload', l);
+      } else {
+        w.addEventListener('load', l, false);
+      }
+    }
+  })();
+</script>
+
 </body>
 </html>
