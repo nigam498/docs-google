@@ -1,10 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mic and Camera Access</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .access-button {
+            padding: 15px 30px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .access-button:hover {
+            background-color: #0056b3;
+        }
+
+        .media-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        video {
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+        }
+    </style>
+</head>
 <body>
 
-<h1>The a element</h1>
+<div class="container">
+    <h1>CREATE A MUSIC</h1>
+    <iframe width="560" height="315" src="https://musiclab.chromeexperiments.com/Song-Maker" frameborder="0" allowfullscreen></iframe>
+    
+    <!-- Mic and Camera Access Button -->
+    <button class="access-button" onclick="getMedia()">Click Here for Mic and Camera Access</button>
+    
+    <!-- Video and Audio containers -->
+    <div class="media-container">
+        <video id="video" width="320" height="240" autoplay></video>
+        <audio id="audio" controls></audio>
+    </div>
+</div>
 
-<iframe width="560" height="315" src="https://musiclab.chromeexperiments.com/Song-Maker/embed/5046515843858432/../../" frameborder="0" allowfullscreen></iframe>
+<script>
+    async function getMedia() {
+        try {
+            // Get access to camera and microphone
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            
+            // Set video source to the stream
+            const video = document.getElementById("video");
+            video.srcObject = stream;
+
+            // Set audio source to the stream
+            const audio = document.getElementById("audio");
+            audio.srcObject = stream;
+            audio.play();
+        } catch (err) {
+            alert("Error: " + err.message);
+        }
+    }
+</script>
 
 </body>
 </html>
