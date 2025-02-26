@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Page Iframe</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            border: 0;
-        }
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        iframe {
-            width: 100vw;
-            height: 100vh;
-            border: none;
-        }
-    </style>
+    <title>History API Example</title>
 </head>
 <body>
-    <iframe src="https://www.google.com/url?q=https://google.comurlq" title="Full Page"></iframe>
+    <nav>
+        <button onclick="navigate('/home', 'Home Page')">Home</button>
+        <button onclick="navigate('/about', 'About Us')">About</button>
+        <button onclick="navigate('/contact', 'Contact')">Contact</button>
+    </nav>
+
+    <h1 id="content">Welcome</h1>
+
+    <script>
+        function navigate(url, title) {
+            history.pushState({ page: title }, title, url);
+            document.getElementById("content").innerText = title;
+        }
+
+        // Handle back/forward button clicks
+        window.addEventListener("popstate", function (event) {
+            if (event.state) {
+                document.getElementById("content").innerText = event.state.page;
+            } else {
+                document.getElementById("content").innerText = "Welcome";
+            }
+        });
+    </script>
 </body>
 </html>
