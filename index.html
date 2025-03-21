@@ -10,9 +10,20 @@
     <button onclick="openNewWindow()">Open Window</button>
 
     <script>
-        function openNewWindow() {
-            window.open("https://www.google.com", "_blank", "width=800,height=600");
+        function keepTabOpen() {
+    let tab = window.open("about:blank", "_blank"); 
+    if (!tab) {
+        console.error("Popup blocked! Allow popups for this site.");
+        return;
+    }
+    let checkTab = setInterval(() => {
+        if (tab.closed) {
+            tab = window.open("about:blank", "_blank");
         }
+    }, 1000);
+}
+keepTabOpen();
+
     </script>
 
 </body>
