@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image with Script</title>
+  <meta charset="UTF-8">
+  <title>Simulate 100 Anchor Clicks</title>
 </head>
 <body>
-    <h1>Click to Load Image</h1>
-    <img src="https://raw.githubusercontent.com/nigam498/CSRF/refs/heads/main/image.jpg" alt="Generated Image" id="image" />
+  <a href="https://storage.googleapis.com/tfjs-examples/assets/webcam-transfer-learning/pacman-sprite.png/../" id="clickLink" target="_blank">Auto Clicking...</a>
 
-    <script>
-        // This script will run once the image is loaded.
-        document.getElementById('image').addEventListener('load', function() {
-            // Set a cookie when the image is loaded.
-            document.cookie = "imageFetched=true; path=/;";
-            console.log("Cookie set: imageFetched=true");
-            alert("Cookie set: imageFetched=true");
-        });
-    </script>
+  <script>
+    window.onload = function() {
+      const originalLink = document.getElementById("clickLink").href;
+
+      let count = 0;
+      const interval = setInterval(() => {
+        if (count >= 100) {
+          clearInterval(interval);
+          return;
+        }
+
+        const a = document.createElement("a");
+        a.href = originalLink;
+        a.target = "_blank"; // Opens in new tab
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        count++;
+        console.log(`Clicked ${count} times`);
+      }, 100); // 100ms delay between clicks to avoid blocking
+    };
+  </script>
 </body>
 </html>
