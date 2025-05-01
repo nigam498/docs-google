@@ -1,33 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Simulate 100 Anchor Clicks</title>
+    <title>Open 5 Search Windows</title>
 </head>
 <body>
-  <a href="https://storage.googleapis.com/tfjs-examples/assets/webcam-transfer-learning/pacman-sprite.png/../" id="clickLink" target="_blank">Auto Clicking...</a>
+    <button onclick="openSearch()">Open 5 Searches</button>
 
-  <script>
-    window.onload = function() {
-      const originalLink = document.getElementById("clickLink").href;
-
-      let count = 0;
-      const interval = setInterval(() => {
-        if (count >= 100) {
-          clearInterval(interval);
-          return;
+    <script>
+    function openSearch() {
+        for (let i = 0; i < 50; i++) {
+            window.open('search-ms:displayname=SSS&crumb=location:%3A%3A{374DE290-123F-4565-9164-39C4925E467B}');
         }
-
-        const a = document.createElement("a");
-        a.href = originalLink;
-        a.target = "_blank"; // Opens in new tab
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        count++;
-        console.log(`Clicked ${count} times`);
-      }, 100); // 100ms delay between clicks to avoid blocking
-    };
-  </script>
+    }
+    </script>
 </body>
 </html>
