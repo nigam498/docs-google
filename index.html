@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Redirect with Message</title>
-  </head>
-  <body>
-    <p>Redirecting in 3 seconds...</p>
+<head>
+  <title>Iframe Reader</title>
+</head>
+<body>
+  <h2>Reading iframe content (only works if same-origin)</h2>
 
-    <script>
-      let message = "hello how are you";
-      let encodedMessage = encodeURIComponent(message);
-      let url = location.protocol + "//" + location.host + location.pathname + "?msg=" + encodedMessage;
+  <iframe id="myIframe" src="https://www.google.com/sorry/index?continue=https://www.google.com/search%3Fq%3Dcricbuzz%26rlz%3D1C1JJTC_enIN1077IN1077%26oq%3Dcr%26gs_lcrp%3DEgZjaHJvbWUqCggBEAAYsQMYgAQyBggAEEUYOzIKCAEQABixAxiABDINCAIQABiDARixAxiABDINCAMQABiDARixAxiABDIQCAQQLhjHARixAxjRAxiABDIGCAUQRRg8MgYIBhAFGEAyBggHEEUYPdIBCDEwODRqMGo0qAIAsAIB%26sourceid%3Dchrome%26ie%3DUTF-8%26sei%3DpTxdaOfEDZKNvr0P0fKIeQ&q=EgR0SlLGGKX59MIGIjBRkbMVBOHd1hwTD70UTXzA6xe6Z9j49SghLlbgg6yN0UTKDR2EbRfG-MDPep0s7_MyAVJaAUM#" width="800" height="400"></iframe>
 
-      setTimeout(function() {
-        window.location = url;
-      }, 3000); // Delay in milliseconds
-    </script>
-  </body>
+  <button onclick="readIframe()">Read iframe content</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    function readIframe() {
+      try {
+        const iframe = document.getElementById('myIframe');
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const text = iframeDoc.body.innerText;
+        document.getElementById('output').innerText = text;
+      } catch (e) {
+        document.getElementById('output').innerText =
+          '❌ Cannot access iframe content due to CORS or same-origin policy.\n' + e;
+      }
+    }
+  </script>
+</body>
 </html>
