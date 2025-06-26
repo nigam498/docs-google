@@ -1,55 +1,19 @@
-<!-- Save this as drive.html and open in browser -->
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Redirect with Message</title>
+  </head>
   <body>
+    <p>Redirecting in 3 seconds...</p>
+
     <script>
-     (() => {
-  // Log response and where it's used
-  const originalFetch = window.fetch;
-  window.fetch = async (...args) => {
-    const response = await originalFetch(...args);
-    const clone = response.clone();
-    try {
-      const data = await clone.json();
-      console.group('🔍 Intercepted fetch');
-      console.log('➡️ URL:', args[0]);
-      console.log('➡️ Method:', (args[1]?.method || 'GET').toUpperCase());
-      console.log('📦 Response:', data);
-      console.groupEnd();
-    } catch (e) {
-      console.warn('Non-JSON response or error parsing.');
-    }
-    return response;
-  };
+      let message = "hello how are you";
+      let encodedMessage = encodeURIComponent(message);
+      let url = location.protocol + "//" + location.host + location.pathname + "?msg=" + encodedMessage;
 
-  // For XMLHttpRequest
-  const open = XMLHttpRequest.prototype.open;
-  const send = XMLHttpRequest.prototype.send;
-
-  XMLHttpRequest.prototype.open = function(method, url, ...rest) {
-    this._method = method;
-    this._url = url;
-    return open.call(this, method, url, ...rest);
-  };
-
-  XMLHttpRequest.prototype.send = function(body) {
-    const xhr = this;
-    xhr.addEventListener('load', function() {
-      try {
-        const json = JSON.parse(this.responseText);
-        console.group('🔍 Intercepted XHR');
-        console.log('➡️ URL:', xhr._url);
-        console.log('➡️ Method:', xhr._method);
-        console.log('📦 Response:', json);
-        console.groupEnd();
-      } catch (e) {
-        console.warn('Non-JSON or parse error in XHR');
-      }
-    });
-    return send.call(this, body);
-  };
-})();
-
+      setTimeout(function() {
+        window.location = url;
+      }, 3000); // Delay in milliseconds
     </script>
   </body>
 </html>
