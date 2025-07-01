@@ -2,10 +2,17 @@
 <html>
 <body>
 
-<h1>The iframe element</h1>
+<h1>Test iframe with HackerOne redirect</h1>
 
-<iframe src="https://www.google.com/url?sa=j&url=" title="W3Schools Free Online Web Tutorials">
-</iframe>
+<iframe src="https://www.google.com/url?sa=j&url=https%3A%2F%2Fhackerone.com" width="100%" height="500"></iframe>
+
+<script>
+  var c = encodeURIComponent("https://hackerone.com");
+  var oi = "exampleOI";
+  var ct = "exampleCT";
+
+  (new Image).src = "/url?sa=T&url=" + c + "&oi=" + encodeURIComponent(oi) + "&ct=" + encodeURIComponent(ct);
+</script>
 
 </body>
 </html>
