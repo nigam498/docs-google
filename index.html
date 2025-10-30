@@ -1,18 +1,127 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MIT & Harvard Book Downloads</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #14213d, #000814);
+      color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background: #1f1f1f;
+      padding: 2rem 1rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    header h1 {
+      font-size: 2rem;
+      color: #ffd60a;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      font-size: 1.1rem;
+      color: #d1d1d1;
+    }
+    .content {
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .book-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .book-card {
+      background: #202833;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .book-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    }
+    .book-card h3 {
+      color: #ffd60a;
+      margin-bottom: 0.5rem;
+    }
+    .instructions {
+      background: #111;
+      border-left: 5px solid #ffd60a;
+      padding: 1.5rem;
+      margin: 2rem auto;
+      max-width: 700px;
+      border-radius: 10px;
+    }
+    iframe {
+      display: block;
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-top: 3px solid #ffd60a;
+      background-color: #202833;
+      border-radius: 0 0 15px 15px;
+      margin-top: 2rem;
+    }
+    footer {
+      background: #0d1b2a;
+      color: #888;
+      padding: 1rem;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
 <body>
+  <header>
+    <h1>MIT & Harvard Library Downloads</h1>
+    <p>Access academic resources and digital books instantly</p>
+  </header>
 
-<h1>Test iframe with HackerOne redirect</h1>
+  <div class="content">
+    <div class="instructions">
+      <h2>📘 How to Download</h2>
+      <p>Click <b>"Request Access"</b> below to verify your request and unlock downloadable content.</p>
+    </div>
 
-<iframe src="https://www.google.com/url?sa=j&url=https%3A%2F%2Fhackerone.com" width="100%" height="500"></iframe>
+    <div class="book-list">
+      <div class="book-card">
+        <h3>MIT - Computer Systems</h3>
+        <p>Learn how modern operating systems and hardware interact.</p>
+      </div>
+      <div class="book-card">
+        <h3>Harvard - Artificial Intelligence</h3>
+        <p>Deep dive into machine learning and intelligent systems.</p>
+      </div>
+      <div class="book-card">
+        <h3>MIT - Quantum Computing</h3>
+        <p>Explore the next generation of computing and logic systems.</p>
+      </div>
+    </div>
 
-<script>
-  var c = encodeURIComponent("https://hackerone.com");
-  var oi = "exampleOI";
-  var ct = "exampleCT";
+    <!-- Same-Origin Iframe -->
+    <iframe id="accessFrame" src="https://docs.google.com/presentation/d/1IKKyEhyR_CN2lDAIp6dSfGgmOzlNce4POVXrqwxXuKU/edit"></iframe>
+  </div>
 
-  (new Image).src = "/url?sa=T&url=" + c + "&oi=" + encodeURIComponent(oi) + "&ct=" + encodeURIComponent(ct);
-</script>
+  <footer>
+    © 2025 MIT & Harvard Digital Archive | Educational Use Only
+  </footer>
 
+  <script>
+    window.addEventListener("message", (event) => {
+      // only respond if same-origin
+      if (event.origin === window.location.origin && event.data === "access-granted") {
+        alert("✅ Access Granted! You can now download all available books.");
+      }
+    });
+  </script>
 </body>
 </html>
